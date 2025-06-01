@@ -1,66 +1,38 @@
-## Foundry
+## Foundry NFT
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+Foundry NFT is a simple NFT contract that allows users to mint NFTs with a specific URI. It is designed to be used with the Foundry framework for Ethereum development.
 
-Foundry consists of:
+## Features
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+-   Simple minting of NFTs with a specific URI
+-   Uses the ERC721 standard
+-   Built with Foundry for easy testing and deployment
 
-## Documentation
+## Installation
 
-https://book.getfoundry.sh/
+To use Foundry NFT, you need to have Foundry installed. You can install it by following the instructions on the [Foundry GitHub page](https://github.com/foundry-rs/foundry#installation).
 
 ## Usage
 
-### Build
+To use the Foundry NFT contract, you can follow these steps:
 
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/jcaraballo113/foundry-nft.git
+    ```
+2. Navigate to the project directory:
+    ```bash
+    cd foundry-nft
+    ```
+3. Install the dependencies:
+    ```bash
+    forge soldeer install
+    ```
+4. Compile the contract:
+    ```bash
+    forge build
+    ```
+5. Run the tests:
+    ```bash
+    forge test
+    ```
