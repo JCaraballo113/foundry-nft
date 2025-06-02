@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
+
 pragma solidity ^0.8.19;
 import {ERC721} from "@openzeppelin/token/ERC721/ERC721.sol";
 import {Base64} from "@openzeppelin/utils/Base64.sol";
@@ -7,8 +8,10 @@ contract MoodNft is ERC721 {
     error MoodNft__CantFlipMoodIfNotOwnerOrApproved();
 
     uint256 private s_tokenCounter;
-    string private s_sadSvgImageUri;
-    string private s_happySvgImageUri;
+    // aderyn-ignore-next-line(state-variable-could-be-immutable)
+    string private i_sadSvgImageUri;
+    // aderyn-ignore-next-line(state-variable-could-be-immutable)
+    string private i_happySvgImageUri;
 
     enum Mood {
         HAPPY,
@@ -21,8 +24,8 @@ contract MoodNft is ERC721 {
         string memory sadSvgImageUri
     ) ERC721("MoodNFT", "MN") {
         s_tokenCounter = 0;
-        s_sadSvgImageUri = sadSvgImageUri;
-        s_happySvgImageUri = happySvgImageUri;
+        i_sadSvgImageUri = sadSvgImageUri;
+        i_happySvgImageUri = happySvgImageUri;
     }
 
     function mintNft() public {
@@ -54,9 +57,9 @@ contract MoodNft is ERC721 {
     ) public view override returns (string memory) {
         string memory imageURI;
         if (s_tokenIdToMood[tokenId] == Mood.SAD) {
-            imageURI = s_sadSvgImageUri;
+            imageURI = i_sadSvgImageUri;
         } else {
-            imageURI = s_happySvgImageUri;
+            imageURI = i_happySvgImageUri;
         }
 
         return
