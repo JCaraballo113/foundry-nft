@@ -9,9 +9,9 @@ contract MoodNft is ERC721 {
 
     uint256 private s_tokenCounter;
     // aderyn-ignore-next-line(state-variable-could-be-immutable)
-    string private i_sadSvgImageUri;
+    string private s_sadSvgImageUri;
     // aderyn-ignore-next-line(state-variable-could-be-immutable)
-    string private i_happySvgImageUri;
+    string private s_happySvgImageUri;
 
     enum Mood {
         HAPPY,
@@ -24,8 +24,8 @@ contract MoodNft is ERC721 {
         string memory sadSvgImageUri
     ) ERC721("MoodNFT", "MN") {
         s_tokenCounter = 0;
-        i_sadSvgImageUri = sadSvgImageUri;
-        i_happySvgImageUri = happySvgImageUri;
+        s_sadSvgImageUri = sadSvgImageUri;
+        s_happySvgImageUri = happySvgImageUri;
     }
 
     function mintNft() public {
@@ -57,9 +57,9 @@ contract MoodNft is ERC721 {
     ) public view override returns (string memory) {
         string memory imageURI;
         if (s_tokenIdToMood[tokenId] == Mood.SAD) {
-            imageURI = i_sadSvgImageUri;
+            imageURI = s_sadSvgImageUri;
         } else {
-            imageURI = i_happySvgImageUri;
+            imageURI = s_happySvgImageUri;
         }
 
         return
@@ -80,5 +80,19 @@ contract MoodNft is ERC721 {
                     )
                 )
             );
+    }
+
+    function getSadSvgImageUri() external view returns (string memory) {
+        return s_sadSvgImageUri;
+    }
+
+    function getHappySvgImageUri() external view returns (string memory) {
+        return s_happySvgImageUri;
+    }
+
+    function getCurrentMoodForToken(
+        uint256 tokenId
+    ) external view returns (Mood) {
+        return s_tokenIdToMood[tokenId];
     }
 }

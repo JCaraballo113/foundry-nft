@@ -2,10 +2,12 @@
 pragma solidity ^0.8.19;
 import {Test} from "forge-std/Test.sol";
 import {console2} from "forge-std/console2.sol";
-import {MoodNft} from "../src/MoodNft.sol";
+import {MoodNft} from "../../src/MoodNft.sol";
+import {DeployMoodNft} from "../../script/DeployMoodNft.s.sol";
 
-contract MoodNftTest is Test {
+contract MoodNftIntegrationTest is Test {
     MoodNft private moodNft;
+    DeployMoodNft private deployer;
     string public constant HAPPY_SVG_URI =
         "data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgd2lkdGg9IjQwMCIgIGhlaWdodD0iNDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgZmlsbD0ieWVsbG93IiByPSI3OCIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgPGcgY2xhc3M9ImV5ZXMiPgogICAgPGNpcmNsZSBjeD0iNzAiIGN5PSI4MiIgcj0iMTIiLz4KICAgIDxjaXJjbGUgY3g9IjEyNyIgY3k9IjgyIiByPSIxMiIvPgogIDwvZz4KICA8cGF0aCBkPSJtMTM2LjgxIDExNi41M2MuNjkgMjYuMTctNjQuMTEgNDItODEuNTItLjczIiBzdHlsZT0iZmlsbDpub25lOyBzdHJva2U6IGJsYWNrOyBzdHJva2Utd2lkdGg6IDM7Ii8+Cjwvc3ZnPg==";
     string public constant SAD_SVG_URI =
@@ -14,12 +16,29 @@ contract MoodNftTest is Test {
     address USER = makeAddr("USER");
 
     function setUp() public {
-        moodNft = new MoodNft(HAPPY_SVG_URI, SAD_SVG_URI);
+        deployer = new DeployMoodNft();
+        moodNft = deployer.run();
     }
 
-    function testViewTokenURI() public {
+    function testViewTokenURIIntegration() public {
         vm.prank(USER);
         moodNft.mintNft();
         console2.log("Token URI: %s", moodNft.tokenURI(0));
+    }
+
+    function testFlipMood() public {
+        vm.prank(USER);
+        moodNft.mintNft();
+
+        vm.prank(USER);
+        moodNft.flipMood(0);
+
+        uint256 expectedMood = 1; // 1 for SAD
+
+        assertEq(
+            uint256(moodNft.getCurrentMoodForToken(0)),
+            expectedMood,
+            "Mood should be flipped to SAD"
+        );
     }
 }
