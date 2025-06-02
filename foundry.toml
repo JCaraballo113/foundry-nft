@@ -2,7 +2,16 @@
 src = "src"
 out = "out"
 libs = ["lib", "dependencies"]
-remappings = ["forge-std/=dependencies/forge-std-1.9.7/"]
+remappings = [
+    "@openzeppelin/=dependencies/@openzeppelin-contracts-5.3.0/",
+    "foundry-devops/=dependencies/cyfrin-foundry-devops-0.4.0rc/",
+    "forge-std/=dependencies/forge-std-1.9.7/src",
+]
+fs_permissions = [
+    { access = "read", path = "./images/" },
+    { access = "read", path = "./broadcast" },
+]
+ffi = true
 
 [soldeer]
 # whether soldeer manages remappings
@@ -25,3 +34,5 @@ recursive_deps = true
 
 [dependencies]
 forge-std = "1.9.7"
+"@openzeppelin-contracts" = "5.3.0"
+cyfrin-foundry-devops = "0.4.0rc"
